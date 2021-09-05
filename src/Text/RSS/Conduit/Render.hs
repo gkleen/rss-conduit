@@ -110,7 +110,7 @@ renderRssCloud c = tag "cloud" attributes $ return () where
   renderUserInfo (Just (UserInfo a b)) = decodeUtf8 a <> ":" <> decodeUtf8 b <> "@"
   renderUserInfo _ = ""
   renderHost (Host h) = decodeUtf8 h
-  renderQuery (Query query) = case intercalate "&" $ map (\(a,b) -> decodeUtf8 a <> "=" <> decodeUtf8 b) query of
+  renderQuery (Query query) = case intercalate "&" $ map (\(a,b) -> decodeUtf8 a <> maybe mempty (("=" <>) . decodeUtf8) b) query of
     "" -> ""
     x  -> "?" <> x
 

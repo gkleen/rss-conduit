@@ -60,7 +60,7 @@ instance Arbitrary Port where
 instance Arbitrary Query where
   arbitrary = do
     a <- listOf1 (encodeUtf8 . pack <$> listOf1 genAlphaNum)
-    b <- listOf1 (encodeUtf8 . pack <$> listOf1 genAlphaNum)
+    b <- listOf1 (oneof [pure Nothing, Just . encodeUtf8 . pack <$> listOf1 genAlphaNum])
     return $ Query $ Prelude.zip a b
   shrink = genericShrink
 
